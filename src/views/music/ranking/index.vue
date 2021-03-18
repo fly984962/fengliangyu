@@ -1,13 +1,12 @@
 <template>
-  <div id="app">
-    <router-view></router-view>
+  <div>
+    排行榜
   </div>
 </template>
 
 <script>
-
 export default {
-  name: 'app',
+
 }
 </script>
 
