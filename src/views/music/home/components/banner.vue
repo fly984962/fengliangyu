@@ -1,5 +1,6 @@
 <template>
   <div id="banner">
+    <!-- 轮播图------------------------------------------------------------------- -->
     <div class="swiper-container">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(item,index) in bannerData" :key="index">
@@ -15,24 +16,24 @@
   </div>
 </template>
 <script>
-  import api from '../../../../api/music/index.js'
   import Swiper from "swiper/bundle"
   import 'swiper/swiper-bundle.css'
-import loopCreate from '.staging/swiper-8ab49017/cjs/components/core/loop/loopCreate';
+  import loopCreate from '.staging/swiper-8ab49017/cjs/components/core/loop/loopCreate';
   export default {
+    props: {
+      bannerData : {
+        type: Array,
+        default: null
+      }
+    },
     data () {
       return {
-        bannerData: []
+        // bannerData: []
       }
     },
     mounted() {
       this.swiperGather()
-      api.getBanner().then(res => {
-        console.log(res)
-        if (res.status == 200) {
-          this.bannerData = res.data.banners
-        }
-      })
+      console.log(this.bannerData);
     },
     methods: {
       swiperGather() {

@@ -5,6 +5,13 @@ const musicApi = {
   getBanner() { // 轮播
     return  axios.get('http://localhost:3000' + '/banner')
   },
+  getHot() { // 热门歌单
+    return  axios.get(base.musicUrl + base.musicHot)
+  },
+  // http://localhost:3000/playlist/detail?id=5001
+  getCat(code) {
+    return  axios.get(base.musicUrl + base.musicCat + code)
+  },
   getSearch(code) { // 网易云歌曲搜索
     return  axios.get(base.musicUrl + base.musicSearch + code)
   },
