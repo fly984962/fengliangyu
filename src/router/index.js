@@ -22,6 +22,13 @@ const routes = [
         path: '/home',
         name: 'home',
         component: () => import('../views/music/home/index'),
+        // children: [
+        //   {
+        //     path: '/home/mvplay',
+        //     name: 'mvplay',
+        //     component: () => import('../views/music/home/mvplay/index'),
+        //   }
+        // ]
       },
       {
         path: '/ranking',
@@ -47,6 +54,11 @@ const routes = [
         path: '/mymusic',
         name: 'mymusic',
         component: () => import('../views/music/mymusic/index'),
+      },
+      {
+        path: '/mvplay',
+        name: 'mvplay',
+        component: () => import('../components/mvplay/index'),
       }
     ]
   }

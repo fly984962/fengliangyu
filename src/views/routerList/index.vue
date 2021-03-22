@@ -24,21 +24,22 @@ export default {
   background: rgb(79, 79, 112);
   position: relative;
   #routerListBox {
-    width:400px;
+    width:300px;
     height: 100px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
+    // background: red;
     .routerListBox_musicBtn {
-      // float: left;
-      margin: 0 auto;
-      margin-right: 10px;
+      margin: 10% 10px 0 10%;
+      // margin-left: 10%;
+      // margin-right: 10px;
+      // margin-top:10%;
     }
     .routerListBox_backstageBtn {
-      // float: left;
-      margin: 0 auto;
       margin-left: 10px;
+      margin-top:10%;
     }
   }
 }

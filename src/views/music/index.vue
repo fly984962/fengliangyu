@@ -6,9 +6,10 @@
     <div class="musicBody">
       <router-view></router-view>
     </div>
+    <!-- <div style="width:100%;height:60px;">{{ null }}</div>
     <div class="musicBottom">
       <musicBottom />
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -29,10 +30,15 @@ export default {
   .musicBottom {
     width: 100%;
     height: 60px;
-    background: red;
+    background: #FFFFFF;
     position: fixed;
     bottom: 0;
+    z-index: 999;
     // left: 0;
   }
+  // .musicBody {
+  //   height: 1000px;
+  //   overflow: auto;
+  // }
 }
 </style>

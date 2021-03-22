@@ -1,10 +1,11 @@
 <template>
   <div id="banner">
-    <!-- 轮播图------------------------------------------------------------------- -->
+    <!-- -------------------------------轮播图------------------------------------ -->
     <div class="swiper-container">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(item,index) in bannerData" :key="index">
-          <img :src="item.imageUrl" alt="">
+          <img  :src="item.imageUrl" @click="imgRouter(item)">
+          <p :style="{'background': item.titleColor}">{{ item.typeTitle }}</p>
         </div>
       </div>
       <!-- 如果需要分页器 -->
@@ -33,9 +34,12 @@
     },
     mounted() {
       this.swiperGather()
-      console.log(this.bannerData);
+      // console.log(this.bannerData);
     },
-    methods: {
+    methods: { 
+      imgRouter(item) {
+        this.$message.success('轮播跳转暂未开发')
+      },
       swiperGather() {
         const mySwiper = new Swiper ('.swiper-container', {
           effect: "cube",
@@ -44,7 +48,7 @@
           observeParents:true,
           // 自动切换
           autoplay: {
-            delay: 3000, //3秒切换一次
+            delay: 3000, // 3秒切换一次
           },
           // 分页器
           pagination: {
@@ -61,10 +65,13 @@
   };
 </script>
 
-<style>
+<style lang="less">
 #banner {
   width: 70%;
   margin: 0 auto;
+  img {
+    cursor: pointer;
+  }
 }
 .swiper-container {
     width: 100%;
@@ -74,6 +81,17 @@
   width: 100%;
   height: 100%;
   margin: 0 auto;
+  position: relative;
+}
+.swiper-slide p {
+  position: absolute;
+  width: 72px;
+  height: 22px;
+  line-height: 22px;
+  text-align: center;
+  color: #fff;
+  bottom: 0px;
+  right: 0px;
 }
 .swiper-container{
     --swiper-theme-color: #ff6600;
