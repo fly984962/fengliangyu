@@ -20,7 +20,7 @@ export default {
     musicMvUrlId() { // 获取Mv
       api.getMusicMvUrl(this.$route.query.id).then(res => {
         let dataObj = res.data.data.brs
-        // console.log(dataObj.split(':'))
+        console.log(dataObj)
         // this.mvId = res.data.data.brs
       })
     }
