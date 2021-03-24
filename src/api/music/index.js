@@ -23,6 +23,15 @@ const musicApi = {
   getMusicMvUrl(id) { // 获取Mv
     return  axios.get('http://musicapi.leanapp.cn' + base.musicMvUrl + id)
   },
+  getmusicMvInfo(id) { // 获取Mv对应的点赞和评论
+    return  axios.get(base.musicUrl + base.musicMvInfo + id)
+  },
+  getmusicArtists() { // 获取热门歌手
+    return  axios.get(base.musicUrl + base.musicArtists)
+  },
+  getmusicLogin(codeA,codeB) { // 登录
+    return  axios.get(base.musicUrl + base.loginA + codeA + base.loginB + codeB)
+  },
   getDetail(id) { // 排行榜
     return  axios.get(base.musicUrl + base.musicDetail + id)
   },

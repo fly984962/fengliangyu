@@ -15,7 +15,7 @@
           <i class="el-icon-search"></i>
         </template>
       </el-input>
-      <!-- <input class="inputSearch" type="text"> -->
+      <div class="musicLogin" v-if="topLogin" @click="loginBlock">登录</div>
       <div class="inputSearch" v-if="SearchShow">
         <div v-for="(item,index) in SearchData" :key="index">
           <p style="font-size:16px;margin-left:4px;cursor: pointer;width:70%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color: #dd6b6b;" @click="searchClick(item)">{{ item.name }}</p>
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import api from '../../../api/music/index.js'
 export default {
   data() {
@@ -36,6 +37,9 @@ export default {
       SearchData: [],
       SearchShow: false
     }
+  },
+  computed: {
+    ...mapState(['topLogin'])
   },
   watch: {
     musicSearch() {
@@ -83,7 +87,10 @@ export default {
       this.SearchData = []
       this.SearchShow = false
       this.$store.state.musicId = val.id
-    }
+    },
+    loginBlock() {
+      this.$store.state.loginframe = true
+    },
   }
 }
 </script>
@@ -134,6 +141,20 @@ export default {
     .inputSearch::-webkit-scrollbar-thumb {
       border-radius: 500px;
       background: rgba(90, 238, 53, 0.5);
+    }
+    .musicLogin { // 登录
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+      right: 15px;
+      top: 0px;
+      bottom: 0px;
+      margin: auto;
+      cursor: pointer;
+    }
+    .musicLogin:hover {
+      color: rgb(87, 96, 230);
     }
   }
 }

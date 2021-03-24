@@ -9,7 +9,7 @@
         </span>
       </div>
       <div class="obtainSongList">
-          <img v-for="(item,index) in songListSet" :key="index" :src="item.coverImgUrl">
+          <img v-for="(item,index) in songListSet" :key="index" :src="item.coverImgUrl" @click="SongRouter(item)">
       </div>
     </div>
   </div>
@@ -40,6 +40,9 @@ export default {
     hotDataFun(item,index) {
       this.active = index
       this.$emit('songListAcquire', item)
+    },
+    SongRouter(val) {
+      this.$router.push({ path: '/musicsong', query:{ id: val.id }})
     }
   }
 }

@@ -13,7 +13,9 @@
     <rankingList :rankingListTitle="rankingListTitle" :rankingListData="rankingListData" :soaringData="soaringData" :newSongData="newSongData" :originalData="originalData" />
     <!-- MV -->
     <div style="height:20px;">{{ null }}</div> <!-- 放一个空DIV,让两个组件之间隔开 --> 
-    <musicMv :musicMvTitle="musicMvTitle" :musicMvData="musicMvData" />
+    <musicMv :musicMvTitle="musicMvTitle" :musicMvData="musicMvData" :musicMvTitleList="musicMvTitleList" @musicMvUrlName="musicMvUrlName" />
+    <!-- 热门歌手 -->
+    <singerList :singerListData="singerListData" />
   </div>
 </template>
 
@@ -23,6 +25,7 @@ import songHot from './components/songHot'
 import newPlate from './components/newPlate'
 import rankingList from './components/rankingList'
 import musicMv from './components/musicMv'
+import singerList from './components/singerList'
 import api from '../../../api/music/index.js'
 // getHot
 export default {
@@ -31,7 +34,8 @@ export default {
     songHot,
     newPlate,
     rankingList,
-    musicMv
+    musicMv,
+    singerList
   },
   data () {
     return {
@@ -69,7 +73,25 @@ export default {
       soaringData: [], // 飙升榜
       newSongData: [], // 新歌榜
       originalData: [], // 原创榜
-      musicMvData: [] // 页面展示mv数据
+      musicMvData: [], // 页面展示mv数据
+      musicMvTitleList: [ // 推荐MV造的伪数据 点击切换
+        {
+          area: '内地'
+        },
+        {
+          area: '港台'
+        },
+        {
+          area: '欧美'
+        },
+        {
+          area: '日本'
+        },
+        {
+          area: '韩国'
+        }
+      ],
+      singerListData: [] // 热门歌手
     }
   },
   created() {
@@ -79,20 +101,21 @@ export default {
     this.toplist()
     this.rankingListGather()
     this.mvList()
+    this.artistsList()
   },
   methods: {
     bannerList() {
       // 轮播接口
-      // api.getBanner().then(res => {
-      //   // console.log('轮播', res)
-      //   if (res.status == 200) {
-      //     this.bannerData = res.data.banners
-      //   } else {
-      //     this.$message.error('轮播数据请求失败')
-      //   }
-      // }).catch(err => {
-      //   this.$message.error('轮播接口丢失')
-      // })
+      api.getBanner().then(res => {
+        // console.log('轮播', res)
+        if (res.status == 200) {
+          this.bannerData = res.data.banners
+        } else {
+          this.$message.error('轮播数据请求失败')
+        }
+      }).catch(err => {
+        this.$message.error('轮播接口丢失')
+      })
     },
     hotList() {
       // 热门歌单接口
@@ -180,11 +203,23 @@ export default {
       })
     },
     mvList() {
-      // 获取推荐MV
+      // 进入首页获取推荐MV
       api.getMusicMv('内地').then(res => {
-        console.log('mv', res)
-        this.musicMvData = res.data.data
-        // console.log(this.musicMvData)
+        // console.log('mv', res)
+        if (res.status == 200) {
+          this.musicMvData = res.data.data
+        } else {
+          this.$message.error('推荐MV数据请求失败')
+        }
+      }).catch(err => {
+        this.$message.error('推荐MV接口丢失')
+      })
+    },
+    artistsList() {
+      // 进入首页获取热门歌手
+      api.getmusicArtists().then(res => {
+        console.log('热门歌手', res)
+        this.singerListData = res.data.artists
       })
     },
     songListAcquire(val) { // 切换热门歌单时执行
@@ -213,6 +248,19 @@ export default {
         this.$message.error('新碟上架接口丢失')
       })
     },
+    musicMvUrlName(val) {
+      // 获取子级传递的搜索内容参数进行请求
+      api.getMusicMv(val).then(res => {
+        // console.log('子级mv', res)
+        if (res.status == 200) {
+          this.musicMvData = res.data.data
+        } else {
+          this.$message.error('推荐MV数据请求失败')
+        }
+      }).catch(err => {
+        this.$message.error('推荐MV接口丢失')
+      })
+    }
   }
 }
 </script>

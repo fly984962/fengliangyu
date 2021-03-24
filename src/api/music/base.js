@@ -1,7 +1,7 @@
 const base = {
   musicUrl : '/api', // http://localhost:3000/
   musicUrlB : 'http://musicapi.leanapp.cn',
-  musicBanner : '/bannar' , // 轮播
+  musicBanner : '/banner?type=0' , // 轮播
   musicSearch : '/search?keywords=', // 搜索
   musicPlay : '/song/url?id=', // 播放
   musicLyric: '/lyric?id=', // 歌词
@@ -12,6 +12,10 @@ const base = {
   musicToplist: `/toplist`, // 排行榜
   musicMv: '/mv/first?limit=10&area=', // Mv列表
   musicMvUrl: '/mv/detail?mvid=', // 获取Mv
+  musicMvInfo: '/comment/mv?id=', // 获取Mv对应的点赞和评论
+  musicArtists: '/top/artists?limit=20', // 热门歌手
+  loginA: '/login/cellphone?phone=', // 登录A
+  loginB: '&password=' // 登录B
 }
 
 export default base
