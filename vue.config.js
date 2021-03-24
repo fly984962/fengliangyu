@@ -13,6 +13,8 @@ module.exports = {
         changeOrigin: true
       }
     },
-    disableHostCheck: true
+    disableHostCheck: true,
+    host: '0.0.0.0',
+    port: 9528
   }
 }
