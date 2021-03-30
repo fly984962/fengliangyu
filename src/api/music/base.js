@@ -1,5 +1,6 @@
 const base = {
-  musicUrl : '/api', // http://localhost:3000/
+  // musicUrl : '/api', // http://localhost:3000/
+  musicUrl : 'http://localhost:3000', // http://localhost:3000/
   musicUrlB : 'http://musicapi.leanapp.cn',
   musicBanner : '/banner?type=0' , // 轮播
   musicSearch : '/search?keywords=', // 搜索
