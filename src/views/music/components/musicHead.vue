@@ -16,6 +16,9 @@
         </template>
       </el-input>
       <div class="musicLogin" v-if="topLogin" @click="loginBlock">登录</div>
+      <div class="musicLoginImg" v-if="loginImg">
+        <img :src="$store.state.statusData.profile.avatarUrl" alt="">
+      </div>
       <div class="inputSearch" v-if="SearchShow">
         <div v-for="(item,index) in SearchData" :key="index">
           <p style="font-size:16px;margin-left:4px;cursor: pointer;width:70%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color: #dd6b6b;" @click="searchClick(item)">{{ item.name }}</p>
@@ -23,6 +26,7 @@
         </div>
       </div>
     </div>
+    <!-- {{ statusData }} -->
   </div>
 </template>
 
@@ -39,7 +43,14 @@ export default {
     }
   },
   computed: {
-    ...mapState(['topLogin'])
+    ...mapState(['topLogin','statusData','loginImg'])
+    // ...mapState({
+    //   topLogin: state => state.musicdata.topLogin,
+    //   statusData: state => state.musicdata.statusData
+    // })
+    // topLogin(){
+    //   return this.$store.musicdata.topLogin
+    // }
   },
   watch: {
     musicSearch() {
@@ -76,17 +87,23 @@ export default {
       console.log('搜索执行了')
       if (this.musicSearch) {
         api.getSearch(this.musicSearch).then(res => {
+          if (res.status == 200) {
+            this.SearchData = res.data.result.songs.slice(0,10)
+          } else {
+            this.$message.error('搜索失败')
+          }
           console.log(res);
-          this.SearchData = res.data.result.songs.slice(0,10)
+        }).catch(err => {
+          this.$message.error('搜索接口丢失')
         })
       }
     },
     searchClick(val) {
-      console.log('播放执行了', val)
-      // this.musicSearch = ''
-      this.SearchData = []
-      this.SearchShow = false
-      this.$store.state.musicId = val.id
+        console.log('播放执行了', val)
+        // this.musicSearch = ''
+        this.SearchData = []
+        this.SearchShow = false
+        this.$store.state.musicId = val.id
     },
     loginBlock() {
       this.$store.state.loginframe = true
@@ -152,6 +169,22 @@ export default {
       bottom: 0px;
       margin: auto;
       cursor: pointer;
+    }
+    .musicLoginImg {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      // line-height: 50px;
+      right: 15px;
+      top: 0px;
+      bottom: 0px;
+      margin: auto;
+      cursor: pointer;
+      img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+      }
     }
     .musicLogin:hover {
       color: rgb(87, 96, 230);

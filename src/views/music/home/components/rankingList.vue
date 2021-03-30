@@ -104,21 +104,21 @@ export default {
   }
   .rankingListBody {
     height: 600px;
-    background: linear-gradient(limegreen, transparent), linear-gradient(90deg, skyblue, transparent), linear-gradient(-90deg, coral, transparent), linear-gradient(-90deg, rgb(220, 80, 255), transparent), linear-gradient(-90deg, rgb(167, 31, 49), transparent);
-    background-blend-mode: screen;
-    animation: colorfulStripeChange 2.5s infinite alternate linear;
+    // background: linear-gradient(limegreen, transparent), linear-gradient(90deg, skyblue, transparent), linear-gradient(-90deg, coral, transparent), linear-gradient(-90deg, rgb(220, 80, 255), transparent), linear-gradient(-90deg, rgb(167, 31, 49), transparent);
+    // background-blend-mode: screen;
+    // animation: colorfulStripeChange 2.5s infinite alternate linear;
     > div:nth-child(1) {
-      // background-image: linear-gradient(#e66465, #9198e5);
+      background-image: linear-gradient(#e66465, #9198e5);
       // border-right: 1px solid #e66465;
       // box-sizing: border-box;
     }
     > div:nth-child(2) {
-      // background-image: linear-gradient(#8a77f3, #cfe591);
+      background-image: linear-gradient(#8a77f3, #cfe591);
       // border-right: 1px solid #8a77f3;
       // box-sizing: border-box;
     }
     > div:nth-child(3) {
-      // background-image: linear-gradient(#e6d175, #d085e7);
+      background-image: linear-gradient(#e6d175, #d085e7);
     }
     .rankingListBodyOne{
       padding: 20px;
@@ -182,12 +182,12 @@ export default {
     //   background-image: linear-gradient(#8a77f3, #cfe591);
     //   float: left;
     // }
-    @keyframes colorfulStripeChange {
-          100% {
-            -webkit-filter: hue-rotate(360deg);
-                    filter: hue-rotate(360deg);
-          }
-        }
+    // @keyframes colorfulStripeChange {
+    //       100% {
+    //         -webkit-filter: hue-rotate(360deg);
+    //                 filter: hue-rotate(360deg);
+    //       }
+    //     }
   }
 }
 </style>

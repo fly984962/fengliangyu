@@ -1,11 +1,4 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import musicdata from './modules/musicdata'
-import persistedState from 'vuex-persistedstate'
-
-Vue.use(Vuex)
-
-export default new Vuex.Store({
+export default {
   state: {
     musicId: null, // 音乐id
     musicName: null, // 音乐名
@@ -17,18 +10,8 @@ export default new Vuex.Store({
     statusData: [], // 登录成功后存储用户的相关信息
     loginImg: false, // 登录成功之后顶部账号图片显示
   },
-  modules: {
-    musicdata
+  mutations: {
   },
-  plugins: [
-    persistedState({
-        storage: window.sessionStorage,
-        reducer(val) {
-          console.log('vuex执行了', val)
-          return {
-            playbasket: val.playbasket
-          }
-        }
-    })
-  ],
-})
+  actions: {
+  },
+}

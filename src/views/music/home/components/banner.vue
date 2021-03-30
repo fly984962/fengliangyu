@@ -19,7 +19,7 @@
 <script>
   import Swiper from "swiper/bundle"
   import 'swiper/swiper-bundle.css'
-  import loopCreate from '.staging/swiper-8ab49017/cjs/components/core/loop/loopCreate';
+  // import loopCreate from '.staging/swiper-8ab49017/cjs/components/core/loop/loopCreate';
   export default {
     props: {
       bannerData : {
@@ -82,6 +82,7 @@
   height: 100%;
   margin: 0 auto;
   position: relative;
+  // display: block;
 }
 .swiper-slide p {
   position: absolute;

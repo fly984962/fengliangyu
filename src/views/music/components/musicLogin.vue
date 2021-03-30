@@ -15,7 +15,7 @@
           <p style="text-align:center;width:60px;height:30px;margin:0 auto;line-height:30px;background:rgb(223, 236, 100);" @click="loginClick">登录</p>
           <!-- <el-button style="margin:0 auto;">登录</el-button> -->
         </el-tab-pane>
-        <el-tab-pane label="验证码登录" name="2">配置管理</el-tab-pane>
+        <el-tab-pane label="验证码登录" name="2"></el-tab-pane>
       </el-tabs>
     </div>
   </div>
@@ -49,6 +49,7 @@ export default {
           this.$store.state.statusData = res.data // 登录成功返回的用户数据
           this.$store.state.topLogin = false // 隐藏顶部的登录
           this.$store.state.loginframe = false // 关闭登录框
+          this.$store.state.loginImg = true // 顶部显示头像
           console.log('登录信息', this.$store.state.statusData)
         } else {
           this.$message.error(res.data.message)

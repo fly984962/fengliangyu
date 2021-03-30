@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="homeBox">
     <!-- ---------------------------------首页----------------------------------- -->
     <!-- 轮播 -->
     <banner :bannerData="bannerData" />
@@ -266,5 +266,15 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
+// #homeBox {
+//   background: linear-gradient(limegreen, transparent), linear-gradient(90deg, skyblue, transparent), linear-gradient(-90deg, coral, transparent), linear-gradient(-90deg, rgb(220, 80, 255), transparent), linear-gradient(-90deg, rgb(167, 31, 49), transparent);
+//   background-blend-mode: screen;
+//   animation: colorfulStripeChange 2.5s infinite alternate linear;
+// }
+// @keyframes colorfulStripeChange {
+//   100% {
+//     // -webkit-filter: hue-rotate(360deg);
+//     filter: hue-rotate(360deg);
+//   }
+// }
 </style>
