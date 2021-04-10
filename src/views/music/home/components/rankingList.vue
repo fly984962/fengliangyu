@@ -14,7 +14,8 @@
         </div>
         <div class="rankingListBodyOne_Foot">
           <div v-for="(item,index) in soaringData" :key="index">
-            <span>{{ index+1 }}：</span>
+            <span class="spanNumber">{{ index + 1 }}</span>
+            <!-- :style="{'color': (index == (0||1,2) ? 'red':'#000')}" -->
             <span class="spanHover" @click="newSongClick(item)">{{ item.name }}</span>
           </div>
         </div>
@@ -28,7 +29,7 @@
         </div>
         <div class="rankingListBodyOne_Foot">
           <div v-for="(item,index) in newSongData" :key="index">
-            <span>{{ index+1 }}：</span>
+            <span class="spanNumber">{{ index + 1 }}</span>
             <span class="spanHover" @click="newSongClick(item)">{{ item.name }}</span>
           </div>
         </div>
@@ -42,7 +43,7 @@
         </div>
         <div class="rankingListBodyOne_Foot">
           <div v-for="(item,index) in originalData" :key="index">
-            <span>{{ index+1 }}：</span>
+            <span class="spanNumber">{{ index + 1 }}</span>
             <span class="spanHover" @click="newSongClick(item)">{{ item.name }}</span>
           </div>
         </div>
@@ -81,7 +82,7 @@ export default {
   },
   methods: {
     newSongClick(item) {
-      console.log(item)
+      // console.log(item)
       this.$store.state.musicId = item.id
     }
   },
@@ -120,7 +121,7 @@ export default {
     > div:nth-child(3) {
       background-image: linear-gradient(#e6d175, #d085e7);
     }
-    .rankingListBodyOne{
+    .rankingListBodyOne {
       padding: 20px;
       box-sizing: border-box;
       width: 32%;
@@ -128,7 +129,7 @@ export default {
       // background-image: linear-gradient(#e66465, #9198e5);
       float: left;
       margin-right: 2%;
-      .rankingListBodyOne_Head{
+      .rankingListBodyOne_Head {
         width: 100%;
         // background: red;
         height: 15%;
@@ -163,8 +164,21 @@ export default {
           height: 10%;
           padding-top: 11px;
           box-sizing: border-box;
+          .spanNumber {
+            display: block;
+            text-align: center;
+            width: 12%;
+            font-size: 18px;
+            float: left;
+          }
           .spanHover {
             cursor: pointer;
+            display: block;
+            float: left;
+            width: 80%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
           }
         }
       }

@@ -13,7 +13,7 @@ module.exports = {
         changeOrigin: true
       }
     },
-    assetsPublicPath: '/',
+    // assetsPublicPath: '/',
     disableHostCheck: true,
     host: '0.0.0.0',
     port: 9528

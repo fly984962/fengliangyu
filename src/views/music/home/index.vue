@@ -97,7 +97,7 @@ export default {
   created() {
     this.bannerList()
     this.hotList()
-    this.plateList()
+    // this.plateList()
     this.toplist()
     this.rankingListGather()
     this.mvList()
@@ -143,16 +143,16 @@ export default {
     },
     plateList() {
       // 新碟上架接口
-      // api.getPlate('ALL').then(res => {
-      //   if (res.status == 200) { // 获取歌单的数量可以设置多条,我在api配置接口哪里写死了获取5条
-      //     console.log(res)
-      //     this.PlateDataList = res.data.monthData.slice(0,9)
-      //   } else {
-      //     this.$message.error('新碟上架数据请求失败')
-      //   }
-      // }).catch(err => {
-      //   this.$message.error('新碟上架接口丢失')
-      // })
+      api.getPlate('ALL').then(res => {
+        if (res.status == 200) {
+          console.log(res)
+          this.PlateDataList = res.data.monthData.slice(0,9)
+        } else {
+          this.$message.error('新碟上架数据请求失败')
+        }
+      }).catch(err => {
+        this.$message.error('新碟上架接口丢失')
+      })
     },
     toplist() {
       // 排行榜接口

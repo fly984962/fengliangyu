@@ -1,17 +1,22 @@
 <template>
   <div id="music">
-    <div class="musicHead">
-      <musicHead />
+    <div class="musicPc">
+      <div class="musicHead">
+        <musicHead />
+      </div>
+      <div class="musicBody">
+        <router-view></router-view>
+      </div>
+      <div style="width:100%;height:60px;" v-if="playbasket">{{ null }}</div>
+      <div class="musicBottom" v-if="playbasket">
+        <musicBottom />
+      </div>
+      <div class="loginClass" v-if="loginframe">
+        <musicLogin />
+      </div>
     </div>
-    <div class="musicBody">
-      <router-view></router-view>
-    </div>
-    <div style="width:100%;height:60px;" v-if="playbasket">{{ null }}</div>
-    <div class="musicBottom" v-if="playbasket">
-      <musicBottom />
-    </div>
-    <div class="loginClass" v-if="loginframe">
-      <musicLogin />
+    <div class="musicMove">
+      <musicMove />
     </div>
   </div>
 </template>
@@ -20,12 +25,14 @@
 import musicHead from './components/musicHead.vue'
 import musicBottom from './components/musicBottom.vue'
 import musicLogin from './components/musicLogin.vue'
+import musicMove from './components/musicMove.vue'
 import { mapState } from 'vuex';
 export default {
   components: {
     musicHead,
     musicBottom,
-    musicLogin
+    musicLogin,
+    musicMove
   },
   computed: {
     ...mapState(['playbasket','loginframe'])
@@ -41,6 +48,24 @@ export default {
   },
 }
 </script>
+<style scoped>
+@media screen and (min-width:992px) {
+  .musicPc{
+    display: block;
+  }
+  .musicMove{
+    display: none;
+  }
+}
+@media screen and (max-width:991px) {
+  .musicMove{
+    display: block;
+  }
+  .musicPc{
+    display: none;
+  }
+}
+</style>
 
 <style lang="less">
 #music {
@@ -48,7 +73,7 @@ export default {
   .musicBottom {
     width: 100%;
     height: 60px;
-    background: #FFFFFF;
+    // background: #FFFFFF;
     position: fixed;
     bottom: 0;
     z-index: 999;

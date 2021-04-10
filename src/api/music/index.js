@@ -38,6 +38,9 @@ const musicApi = {
   getPlay(id) { // 网易云歌曲播放
     return  axios.get(base.musicUrl + base.musicPlay + id)
   },
+  getParticulars(id) { // 网易云歌曲详情
+    return  axios.get(base.musicUrl + base.musicParticulars + id)
+  },
   getSearch(code) { // 网易云歌曲搜索
     return  axios.get(base.musicUrl + base.musicSearch + code)
   },
