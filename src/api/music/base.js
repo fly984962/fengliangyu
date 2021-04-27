@@ -18,7 +18,10 @@ const base = {
   musicArtists: '/top/artists?limit=20', // 热门歌手
   loginA: '/login/cellphone?phone=', // 登录A
   loginB: '&password=', // 登录B
-  playlistDetail: '/playlist/detail?id=' // 获取歌单详情
+  playlistDetail: '/playlist/detail?id=', // 获取歌单详情
+  musicSong: '/song/url?id=', // 获取歌单详情URL
+  musicDynamic: '/playlist/detail/dynamic?id=', // 歌单详情动态
+  musicComment: '/comment/playlist?limit=10&id=' // 获取歌单评论
 }
 
 export default base

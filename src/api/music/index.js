@@ -41,8 +41,17 @@ const musicApi = {
   getParticulars(id) { // 网易云歌曲详情
     return  axios.get(base.musicUrl + base.musicParticulars + id)
   },
+  getmusicSong(id) { // 网易云歌曲详情
+    return  axios.get(base.musicUrl + base.musicSong + id)
+  },
   getplaylistDetail(id) { // 歌单详情
     return  axios.get(base.musicUrl + base.playlistDetail + id)
+  },
+  getMusicComment(id,offset) { // 歌单评论
+    return  axios.get(base.musicUrl + base.musicComment + id + '&offset=' + offset)
+  },
+  getMusicDynamic(id) { // 歌单详情动态
+    return  axios.get(base.musicUrl + base.musicDynamic + id)
   },
   getSearch(code) { // 网易云歌曲搜索
     return  axios.get(base.musicUrl + base.musicSearch + code)

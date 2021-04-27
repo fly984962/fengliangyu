@@ -88,7 +88,7 @@ export default {
   created() {},
   mounted() {
     if (sessionStorage.getItem("volume")) {
-      console.log(sessionStorage.getItem("volume"), '==========================')
+      // console.log(sessionStorage.getItem("volume"), '==========================')
       this.volume = Number(sessionStorage.getItem("volume"))
       // this.$refs.audio.volume = sessionStorage.getItem("volume") / 100
     } else {

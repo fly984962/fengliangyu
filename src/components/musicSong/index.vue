@@ -100,6 +100,48 @@
               </template>
             </el-table-column>
           </el-table>
+          <div class="musicSong_body_body_left_comments">
+            <div class="musicSong_body_body_left_comments_top">
+              <span style="font-size:16px;cursor:pointer;">评论</span>
+            </div>
+            <div class="musicSong_body_body_left_comments_input">
+              <el-input
+                type="textarea"
+                placeholder="请输入内容"
+                style="margin-bottom:8px;"
+                :rows="6" 
+                resize="none"
+                v-model="text"
+                maxlength="140"
+                show-word-limit
+              />
+              <div style="height:30px;">
+                <el-button size="mini" type="primary" style="float:right;" @click="submitClick">提交</el-button>
+              </div>
+            </div>
+            <div class="musicSong_body_body_left_comments_comments">
+              <span style="font-size:12px;cursor:pointer;">最新评论</span>
+            </div>
+            <div style="height:15px;">
+              {{ null }}
+            </div>
+            <div v-for="(item,index) in comments" :key="index" style="width:100%;height:75px;margin-bottom:7px;border-bottom:1px dashed #999;">
+              <img :src="item.user.avatarUrl" alt="" style="width:50px;float:left;">
+              <div style="margin-left:10px;float:left;width:650px;">
+                <p style="color:#0c73c2;font-size:12px;margin-bottom:7px;">{{ item.user.nickname }}</p>
+                <p style="font-size:12px;margin-bottom:12px;">
+                  <span style="margin-right:5px;">{{ item.time }}</span><span>{{ item.timeB }}</span>
+                </p>
+                <p style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:650px;font-size:12px;">{{ item.content }}</p>
+              </div>
+            </div>
+            <el-pagination
+              background
+              layout="prev, pager, next"
+              :total="total"
+              @current-change="handleCurrentChange">
+            </el-pagination>
+          </div>
         </div>
         <div class="musicSong_body_body_right">
           <div class="musicSong_body_body_right_top">
@@ -107,8 +149,11 @@
           </div>
         </div>
       </div>
+      <div class="musicSong_body_bottom">
+        
+      </div>
     </div>
-    <div style="width:100%;height:60px;">
+    <div style="width:100%;height:600px;">
       {{ null }}
     </div>
   </div>
@@ -129,10 +174,20 @@ export default {
       description: [],
       tableData: [],
       songLength: '',
-      playCount: ''
+      playCount: '',
+      text: '',
+      offset: '1', // 分页
+      comments: [], // 评论
+      total: 0
     }
   },
   mounted() {
+    api.getMusicDynamic(this.$route.query.id).then(res => {
+      // console.log(res, '歌单详情动态')
+      if (res.status == 200) {
+        this.total = res.data.commentCount
+      }
+    })
     api.getplaylistDetail(this.$route.query.id).then(res => {
       if (res.status == 200) {
         let createTimeData = ''
@@ -154,7 +209,7 @@ export default {
             let singerName = []
             this.tableData = res.data.songs.slice(0,10)
             this.songLength = res.data.songs.length
-            console.log(res, '歌曲详情');
+            // console.log(res, '歌曲详情');
             for (let i = 0; i < this.tableData.length; i++) {
               this.tableData[i].index = i + 1
             }
@@ -168,6 +223,7 @@ export default {
         // console.log(musicIdData.toString(), '歌曲ID')
       }
     })
+    this.offsetHttp()
   },
   computed: {
     ...mapState(['musicId'])
@@ -176,6 +232,36 @@ export default {
     nameClick(row) {
       // console.log(row)
       this.$store.state.musicId = row.id
+    },
+    offsetHttp() {
+      api.getMusicComment(this.$route.query.id,this.offset).then(res => {
+        if (res.status == 200) {
+          // console.log(res.data, '歌单评论')
+          res.data.comments.map(item => {
+            let time = new Date(item.time)
+            item.time = `${time.getFullYear()}年${time.getMonth()+1}月${time.getDate()}日`
+            let a = time.getHours()
+            let b = time.getMinutes()
+            if (a.toString().length == 1) {
+              a = '0' + a
+            }
+            if (b.toString().length == 1) {
+              b = '0' + b
+            }
+            item.timeB = `${a}时${b}分`
+          })
+          // this.time = `${time.getFullYear()}-${time.getMonth()+1}-${time.getDate()}`
+          this.comments = res.data.comments
+        }
+      })
+    },
+    handleCurrentChange(val) {
+      console.log(val)
+      this.offset = val
+      this.offsetHttp()
+    },
+    submitClick() {
+      this.$message.error('暂不支持评论');
     }
   },
 }
@@ -184,7 +270,8 @@ export default {
 <style lang="less">
 #musicSong {
   width: 1125px;
-  height: 2000px;
+  height: 2070px;
+  margin-bottom: 60px;
   background: red;
   margin: 0 auto;
   background: #F5F5F5;
@@ -340,12 +427,34 @@ export default {
         float: left;
         border-right: 1px solid #999;
         box-sizing: border-box;
+        padding-right: 20px;
+        .musicSong_body_body_left_comments {
+          width: 100%;
+          height: 700px;
+          margin-top: 20px;
+          .musicSong_body_body_left_comments_top {
+            width: 100%;
+            height: 30px;
+            // background: red;
+            line-height: 30px;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #c20c0c;
+          }
+          .musicSong_body_body_left_comments_input {
+            width: 100%;
+          }
+          .musicSong_body_body_left_comments_comments {
+            width: 100%;
+            height: 30px;
+            border-bottom: 1px solid #cfcfcf;
+          }
+        }
       }
       .musicSong_body_body_right {
         width: 30%;
         height: 300px;
         // background: yellow;
-        padding: 20px;
+        padding-left: 20px;
         box-sizing: border-box;
         float: left;
         .musicSong_body_body_right_top {
@@ -353,6 +462,7 @@ export default {
           height: 20px;
           // background: red;
           border-bottom: 1px solid #999;
+          // margin-bottom: 8px;
         }
       }
     }
@@ -362,5 +472,10 @@ export default {
     //   height: 30px;
     // }
   }
+  // .musicSong_body_bottom {
+  //   width: 70%;
+  //   height: 900px;
+  //   background: red;
+  // }
 }
 </style>
