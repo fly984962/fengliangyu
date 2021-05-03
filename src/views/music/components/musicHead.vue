@@ -1,15 +1,15 @@
 <template>
   <div id="musicHead">
     <div class="musicHeadBox">
-      <el-menu :default-active="activeIndex" class="el-menu-demo menuClass" mode="horizontal">
-        <el-menu-item index="1" @click="homeClick">首页</el-menu-item>
-        <el-menu-item index="2" @click="rankingClick">排行榜</el-menu-item>
-        <el-menu-item index="3" @click="songlistClick">歌单</el-menu-item>
-        <el-menu-item index="4" @click="mvClick">MV</el-menu-item>
-        <el-menu-item index="5" @click="singerClick">歌手</el-menu-item>
-        <el-menu-item index="6" @click="mymusicClick">我的音乐</el-menu-item>
+      <el-menu :default-active="$route.path" class="el-menu-demo menuClass" unique-opened mode="horizontal" router>
+        <!-- $route.path -->
+        <el-menu-item index="/home" @click="homeClick">首页</el-menu-item>
+        <el-menu-item index="/ranking" @click="rankingClick">排行榜</el-menu-item>
+        <el-menu-item index="/songlist" @click="songlistClick">歌单</el-menu-item>
+        <el-menu-item index="/mv" @click="mvClick">MV</el-menu-item>
+        <el-menu-item index="/singer" @click="singerClick">歌手</el-menu-item>
+        <el-menu-item index="/mymusic" @click="mymusicClick">我的音乐</el-menu-item>
       </el-menu>
-      <!-- <el-input size="mini" class="inputClass" /> -->
       <el-input size="mini" class="inputClass" v-model="musicSearch" @input="http">
         <template slot="append">
           <i class="el-icon-search"></i>
@@ -26,7 +26,6 @@
         </div>
       </div>
     </div>
-    <!-- {{ statusData }} -->
   </div>
 </template>
 
@@ -44,13 +43,6 @@ export default {
   },
   computed: {
     ...mapState(['topLogin','statusData','loginImg'])
-    // ...mapState({
-    //   topLogin: state => state.musicdata.topLogin,
-    //   statusData: state => state.musicdata.statusData
-    // })
-    // topLogin(){
-    //   return this.$store.musicdata.topLogin
-    // }
   },
   watch: {
     musicSearch() {
@@ -62,9 +54,6 @@ export default {
     }
   },
   methods: {
-    // mouseclick(val) {
-    //   console.log(val);
-    // },
     homeClick() { // 首页
       this.$router.push({ path: '/home'})
     },
@@ -84,13 +73,13 @@ export default {
       this.$router.push({ path: '/mymusic'})
     },
     http() {
-      console.log('搜索执行了')
+      // console.log('搜索执行了')
       if (this.musicSearch) {
         api.getSearch(this.musicSearch).then(res => {
           if (res.status == 200) {
             this.SearchData = res.data.result.songs.slice(0,10)
           } else {
-            this.$message.error('搜索失败')
+            // this.$message.error('搜索失败')
           }
           console.log(res);
         }).catch(err => {
@@ -99,7 +88,7 @@ export default {
       }
     },
     searchClick(val) {
-        console.log('播放执行了', val)
+        // console.log('播放执行了', val)
         // this.musicSearch = ''
         this.SearchData = []
         this.SearchShow = false

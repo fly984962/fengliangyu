@@ -5,7 +5,7 @@
     </div>
     <div class="singerList_Body">
       <div v-for="(item,index) in singerListData" :key="index" class="singerList_Body_Box">
-        <img :src="item.img1v1Url" alt="">
+        <img :src="item.img1v1Url" alt="" @click="singerIntroduce(item)">
         <p>{{ item.name }}</p>
       </div>
     </div>
@@ -19,7 +19,12 @@ export default {
       type: Array,
       default: null
     },
-  }
+  },
+  methods: {
+    singerIntroduce(val) {
+      this.$router.push({ path: '/singerIntroduce', query:{ id: val.id }})
+    }
+  },
 }
 </script>
 

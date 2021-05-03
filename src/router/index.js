@@ -72,6 +72,18 @@ const routes = [
         path: '/musicsong',
         name: 'musicsong',
         component: () => import('../components/musicSong/index'),
+      },
+      {
+        // 专辑页
+        path: '/musicTheAlbum',
+        name: 'musicTheAlbum',
+        component: () => import('../components/musicTheAlbum/index'),
+      },
+      {
+        // 歌手介绍页
+        path: '/singerIntroduce',
+        name: 'singerIntroduce',
+        component: () => import('../components/singerIntroduce/index'),
       }
     ]
   }

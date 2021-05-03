@@ -1,7 +1,7 @@
 const base = {
   musicUrl : '/api', // http://localhost:3000/
   // musicUrl : 'http://localhost:3000', // http://localhost:3000/
-  musicUrlB : 'http://musicapi.leanapp.cn',
+  musicUrlB : '/app',
   musicBanner : '/banner?type=0' , // 轮播
   musicSearch : '/search?keywords=', // 搜索
   musicPlay : '/song/url?id=', // 播放
@@ -10,7 +10,7 @@ const base = {
   musicHot: '/playlist/hot', // 热门歌单
   musicCat: '/top/playlist?limit=5&order=hot&cat=', // 获取热门歌单
   musicDetail: '/playlist/detail?limit=10&id=', // 获取歌单详情
-  musicNewPlate: '/top/album?limit=20&area=', // 新碟上架
+  musicNewPlate: '/album/new?limit=9&area=', // 新碟上架
   musicToplist: `/toplist`, // 排行榜
   musicMv: '/mv/first?limit=10&area=', // Mv列表
   musicMvUrl: '/mv/detail?mvid=', // 获取Mv
@@ -21,7 +21,12 @@ const base = {
   playlistDetail: '/playlist/detail?id=', // 获取歌单详情
   musicSong: '/song/url?id=', // 获取歌单详情URL
   musicDynamic: '/playlist/detail/dynamic?id=', // 歌单详情动态
-  musicComment: '/comment/playlist?limit=10&id=' // 获取歌单评论
+  musicComment: '/comment/playlist?limit=10&id=', // 获取歌单评论
+  musicAlbum: '/album?id=', // 专辑详情
+  musicAlbumComment: '/comment/album?limit=10&id=', // 专辑评论
+  musicArtistA: '/artist/detail?id=', // 歌手详情
+  musicArtistB: '/artist/desc?id=', // 歌手描述
+  musicArtistC: '/artist/album?limit=10&id=' // 歌手专辑
 }
 
 export default base

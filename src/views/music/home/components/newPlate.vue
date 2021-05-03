@@ -10,7 +10,7 @@
       </div>
       <div class="newPlateFoot">
         <div class="newPlateFootBox" v-for="(item,index) in PlateDataList" :key="index" :src="item.blurPicUrl" @click="newPlateFootFun(item)">
-          <img class="newPlateFootImgUrl" :src="item.blurPicUrl">
+          <img class="newPlateFootImgUrl" :src="item.blurPicUrl" @click="musicTheAlbumClick(item)">
           <img class="newPlateFootImg" src="../../../../assets/images/888.png">
           <span class="newPlateFootOne" style="width:165px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ item.name }}</span>
           <span class="newPlateFootTwo">{{ item.artists[0].name }}</span>
@@ -48,6 +48,9 @@ export default {
     },
     newPlateFootFun(item) {
       console.log(item)
+    },
+    musicTheAlbumClick(val) {
+      this.$router.push({ path: '/musicTheAlbum', query:{ id: val.id }})
     }
   }
 }

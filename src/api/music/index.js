@@ -21,7 +21,7 @@ const musicApi = {
     return  axios.get(base.musicUrl + base.musicMv + code)
   },
   getMusicMvUrl(id) { // 获取Mv
-    return  axios.get('http://musicapi.leanapp.cn' + base.musicMvUrl + id)
+    return  axios.get(base.musicUrl + base.musicMvUrl + id)
   },
   getmusicMvInfo(id) { // 获取Mv对应的点赞和评论
     return  axios.get(base.musicUrl + base.musicMvInfo + id)
@@ -53,11 +53,20 @@ const musicApi = {
   getMusicDynamic(id) { // 歌单详情动态
     return  axios.get(base.musicUrl + base.musicDynamic + id)
   },
+  getMusicAlbum(id) { // 专辑详情
+    return  axios.get(base.musicUrl + base.musicAlbum + id)
+  },
+  getMusicAlbumComment(id, offset) { // 专辑详情
+    return  axios.get(base.musicUrl + base.musicAlbumComment + id + '&offset=' + offset)
+  },
   getSearch(code) { // 网易云歌曲搜索
     return  axios.get(base.musicUrl + base.musicSearch + code)
   },
   getLyric(id) { // 网易云歌曲歌词
     return  axios.get(base.musicUrl + base.musicLyric + id)
+  },
+  getMusicArtistA(id) { // 歌手详情
+    return  axios.get(base.musicUrl + base.musicArtistA + id)
   }
 }
 

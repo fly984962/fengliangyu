@@ -97,7 +97,7 @@ export default {
   created() {
     this.bannerList()
     this.hotList()
-    // this.plateList()
+    this.plateList()
     this.toplist()
     this.rankingListGather()
     this.mvList()
@@ -145,8 +145,8 @@ export default {
       // 新碟上架接口
       api.getPlate('ALL').then(res => {
         if (res.status == 200) {
-          console.log(res)
-          this.PlateDataList = res.data.monthData.slice(0,9)
+          console.log(res, '新碟上架')
+          this.PlateDataList = res.data.albums
         } else {
           this.$message.error('新碟上架数据请求失败')
         }
@@ -237,10 +237,11 @@ export default {
     plateDataMet(val) { // 切换新碟上架时执行
       api.getPlate(val).then(res => {
         if (res.status == 200) {
-          // console.log(res)
+          this.PlateDataList = []
+          console.log(res, '新碟上架')
           // 这里得吐槽一下,根据文档的limit来请求条数,都写死9条了,请求时还是请求到好几百条,搞得加载时特别慢
           // 也可能是没搞懂条件,将就着用了
-          this.PlateDataList = res.data.monthData.slice(0,9)
+          this.PlateDataList = res.data.albums
         } else {
           this.$message.error('新碟上架数据请求失败')
         }
