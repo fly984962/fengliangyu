@@ -16,6 +16,7 @@
     <musicMv :musicMvTitle="musicMvTitle" :musicMvData="musicMvData" :musicMvTitleList="musicMvTitleList" @musicMvUrlName="musicMvUrlName" />
     <!-- 热门歌手 -->
     <singerList :singerListData="singerListData" />
+    <span class="homeBoxTitle">数据来源于网易云音乐</span>
   </div>
 </template>
 
@@ -278,4 +279,13 @@ export default {
 //     filter: hue-rotate(360deg);
 //   }
 // }
+.homeBoxTitle {
+  position: absolute;
+  // width: 400px;
+  // height: 400px;
+  color: red;
+  left: 50px;
+  top: 15px;
+  z-index: 999;
+}
 </style>

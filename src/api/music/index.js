@@ -35,6 +35,9 @@ const musicApi = {
   getDetail(id) { // 排行榜
     return  axios.get(base.musicUrl + base.musicDetail + id)
   },
+  getDetailB(id) { // 排行榜
+    return  axios.get(base.musicUrl + base.musicDetailB + id)
+  },
   getPlay(id) { // 网易云歌曲播放
     return  axios.get(base.musicUrl + base.musicPlay + id)
   },
@@ -67,6 +70,18 @@ const musicApi = {
   },
   getMusicArtistA(id) { // 歌手详情
     return  axios.get(base.musicUrl + base.musicArtistA + id)
+  },
+  getMusicArtistB(id) { // 歌手描述
+    return  axios.get(base.musicUrl + base.musicArtistB + id)
+  },
+  getMusicArtistC(id) { // 歌手单曲
+    return  axios.get(base.musicUrl + base.musicArtistC + id)
+  },
+  getMusicArtistD(id, offset) { // 歌手专辑
+    return  axios.get(base.musicUrl + base.musicArtistD + id + '&offset=' + offset)
+  },
+  getMusicArtistE(id, offset) { // 歌手专辑
+    return  axios.get(base.musicUrl + base.musicArtistE + id + '&offset=' + offset)
   }
 }
 

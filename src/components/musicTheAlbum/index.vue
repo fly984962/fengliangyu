@@ -97,14 +97,16 @@
         <div class="musicTheAlbum_bottom_left_comments_page">
           <span style="font-size:12px;cursor:pointer;">最新评论</span>
         </div>
-        <div v-for="(item,index) in thisAlbumComment" :key="index" style="width:100%;height:75px;margin-bottom:7px;border-bottom:1px dashed #999;">
-          <img :src="item.user.avatarUrl" alt="" style="width:50px;float:left;">
-          <div style="margin-left:10px;float:left;width:650px;">
-            <p style="color:#0c73c2;font-size:12px;margin-bottom:7px;">{{ item.user.nickname }}</p>
-            <p style="font-size:12px;margin-bottom:12px;">
-              <span style="margin-right:5px;">{{ item.time }}</span><span>{{ item.timeB }}</span>
-            </p>
-            <p style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:650px;font-size:12px;">{{ item.content }}</p>
+        <div style="z-index:999" v-loading="loading" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading">
+          <div v-for="(item,index) in thisAlbumComment" :key="index" style="width:100%;height:75px;margin-bottom:7px;border-bottom:1px dashed #999;">
+            <img :src="item.user.avatarUrl" alt="" style="width:50px;float:left;">
+            <div style="margin-left:10px;float:left;width:650px;">
+              <p style="color:#0c73c2;font-size:12px;margin-bottom:7px;">{{ item.user.nickname }}</p>
+              <p style="font-size:12px;margin-bottom:12px;">
+                <span style="margin-right:5px;">{{ item.time }}</span>
+              </p>
+              <p style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:650px;font-size:12px;">{{ item.content }}</p>
+            </div>
           </div>
         </div>
         <el-pagination
@@ -136,6 +138,7 @@ export default {
       company: '', // 发行公司
       publishTime: '', // 发行时间
       description: [], // 专辑介绍
+      loading: false,
       musicTheAlbum_body_style: {
         'height' : '200px',
         'overflow' : 'hidden'
@@ -179,6 +182,8 @@ export default {
           this.tableData[i].index = i + 1
         }
         this.songsLength = res.data.songs.length
+      } else {
+        this.$message.error('新碟详情请求失败')
       }
     })
   },
@@ -204,11 +209,20 @@ export default {
       this.offset = val
       this.albumComment()
     },
-    albumComment() {
+    albumComment() { // 专辑评论
+      this.loading = true
       api.getMusicAlbumComment(this.$route.query.id, this.offset).then(res => {
         if (res.status == 200) {
+          // console.log(res);
+          res.data.comments.map(item => {
+            let it = new Date(item.time)
+            item.time = `${it.getFullYear()}-${it.getMonth()+1}-${it.getDate()}`
+          })
           this.thisAlbumComment = res.data.comments
           this.total = res.data.total
+          this.loading = false
+        } else {
+          this.$message.error('专辑评论请求失败')
         }
       })
     }

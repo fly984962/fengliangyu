@@ -18,7 +18,7 @@
         <span class="el-icon-caret-right musicBottom-center-left-button" @click="musicRight"></span>
       </div>
       <div class="musicBottom-center-center">
-        <el-slider class="musicBottom-center-center_box" v-model="playPlan" :show-tooltip="false"></el-slider>
+        <el-slider class="musicBottom-center-center_box" v-model="playPlan" :show-tooltip="false" @change="musicNum"></el-slider>
       </div>
     </div>
     <div class="musicBottom-right">
@@ -31,8 +31,18 @@
       </div>
       <div class="musicBottom-right_center">
         <span :style="{'color': (loop == true ? 'red':'#000')}" style="margin-left:5px;font-size:20px;cursor: pointer;" class="iconfont" @click="loopClick">&#xe607;</span>
-        <span style="margin-left:15px;font-size:20px;cursor: pointer;" class="iconfont">&#xe727;</span>
-        <span style="margin-left:15px;font-size:20px;cursor: pointer;" class="iconfont volumeClass" @click="volumeClick">
+        <span :style="{'color': (lyricIf == true ? 'red':'#000')}" style="margin-left:15px;font-size:20px;cursor: pointer;" class="iconfont musicBottom-right_center_icon" @click="lyricClick">&#xe727;
+          <div v-if="lyricIf" class="musicBottom-right_center_word">
+            <!-- <p style="color:#fff;position: absolute;top:-22px;right:6px;font-size:12px;"><span @click="lyricIf = false">x</span></p> -->
+            <!-- <div style="width:20px;height:20px;"></div> -->
+            <div class="musicBottom-right_center_word_lyric">
+              <div style="transition: transform 0.5s ease-out 0s;" :style="musicBottomSty">
+                <p style="color:#fff;width:100%;height:20px;line-height:20px;font-size:12px;" v-for="(item,index) in lyric" :key="index" :style="{'color': (index == currentRow ? 'red':'#fff')}">{{ item.text }}</p>
+              </div>
+            </div>
+          </div>
+        </span>
+        <span style="margin-left:15px;font-size:16px;cursor: pointer;" class="iconfont volumeClass" @click="volumeClick">
           &#xe642;
           <div v-if="sliderIf">
             <el-slider
@@ -69,7 +79,18 @@ export default {
       second2: '00', // 歌曲总秒数
       loop: false, // 单曲循环
       volume: 0, // 当前音量值
-      sliderIf: false
+      sliderIf: false,
+      lyric: [],
+      currentTime: '',
+      currentRow: '',
+      lyricIf: false,
+      ti: '0',
+      musicBottomSty: {
+        width: '300px',
+        // height: '280px',
+        overflow: 'hidden',
+        transform: `translateY(-0px)`
+      }
     }
   },
   computed: {
@@ -79,10 +100,28 @@ export default {
     musicId(newPlay,formerPlay) { // 监听歌曲播放的状态 如果有变化 调用最新的ID歌曲播放
       this.musicPlay(newPlay)
       this.musicParticulars(newPlay)
+      this.getlyrics(newPlay)
+      this.ti = '0'
+      this.musicBottomSty.transform = `translateY(-0px)`
     },
-    volume(newPlay,formerPlay) {
+    volume(newPlay,formerPlay) { // 监听当前音量
       this.$refs.audio.volume = newPlay / 100
       sessionStorage.setItem("volume", newPlay);
+    },
+    currentTime(a, b) { // 监听歌词播放到哪一行
+      // console.log(a,parseInt(b))
+      this.lyric.forEach((element, index) => {
+        if (parseInt(b) == element.time) {
+          this.currentRow = index; // 通过比较我们歌词属性里的时间与当前播放时间，来定位到该歌词
+          if (this.currentRow >= 8) {
+            // this.ti = parseInt(this.ti) + parseInt(5) 
+            this.ti = this.currentRow * 20 - 140
+            this.musicBottomSty.transform = `translateY(-${this.ti}px)`
+          } else {
+            this.musicBottomSty.transform = `translateY(-0px)`
+          }
+        }
+      });
     }
   },
   created() {},
@@ -106,6 +145,9 @@ export default {
     },
     loopClick() { // 单曲循环
       this.loop = !this.loop
+    },
+    lyricClick() {
+      this.lyricIf = !this.lyricIf
     },
     musicPlay(id) {
       api.getPlay(id).then(res => {
@@ -132,6 +174,14 @@ export default {
         }
       }).catch(err => {
         this.$message.error('歌曲详情接口丢失')
+      })
+    },
+    getlyrics(val) {
+      api.getLyric(val).then(res => {
+        if (res.status == 200) {
+          console.log('歌词', res)
+          this.formatLyric(res.data.lrc.lyric)
+        }
       })
     },
     getPlay(val) {
@@ -170,26 +220,59 @@ export default {
     musicRight() {
       this.$message.warning('切换歌曲暂未开发')
     },
+    formatLyric(text) {
+      this.lyric = []
+      let lyricA = []
+      let arr = text.split("\n"); // 通过换行符“\n”进行切割
+      let row = arr.length; //获取歌词行数
+      for (let i = 0; i < row; i++) {
+        let temp_row = arr[i]; // 现在每一行格式大概就是这样"[00:04.302][02:10.00]hello world";
+        let temp_arr = temp_row.split("]"); // 我们可以通过“]”对时间和文本进行分离
+        let text = temp_arr.pop(); // 把歌词文本从数组中剔除出来，获取到歌词文本了！
+        //再对剩下的歌词时间进行处理
+        temp_arr.forEach((element,index) => {
+          let obj = {};
+          let time_arr = element.substr(1, element.length - 1).split(":"); // 先把多余的“[”去掉，再分离出分、秒
+          let s = parseInt(time_arr[0]) * 60 + Math.ceil(time_arr[1]); // 把时间转换成与currentTime相同的类型，方便待会实现滚动效果
+          obj.time = s;
+          obj.text = text;
+          obj.num = i
+          this.lyric.push(obj); // 每一行歌词对象存到组件的lyric歌词属性里
+        });
+      }
+      console.log(this.lyric)
+    },
     getDuration() { // 歌曲总时长
       this.second2 = (Math.floor(parseInt(this.$refs.audio.duration) / 60)).toString().padStart(2, '0')
       this.minute2 = (parseInt(this.$refs.audio.duration) % 60).toString().padStart(2, '0')
     },
     updateTime(e) { // 当前播放时间
       this.currentTime = e.target.currentTime;  //获取audio当前播放时间
+      // console.log('当前播放时间' ,this.currentTime)
       this.second = (Math.floor(parseInt(e.target.currentTime) / 60)).toString().padStart(2, '0')
       this.minute = (parseInt(e.target.currentTime) % 60).toString().padStart(2, '0')
+    },
+    musicNum(val) { // 改变播放进度条
+      const musicMp3 = document.getElementById('musicMp3')
+      musicMp3.currentTime = (this.playPlan/100).toFixed(5) * musicMp3.duration
     },
     changeProgress() { // 歌曲进度条
       const musicMp3 = document.getElementById('musicMp3')
       const timer = setInterval(() => {
         const numbers = musicMp3.currentTime / musicMp3.duration
-        let perNumber = (numbers * 100).toFixed(2)
+        // let perNumber = (numbers * 100).toFixed(2)
+        let perNumber = (numbers * 100)
         if (perNumber >= 100) {
           clearInterval(timer)
+          this.ti = '0'
+          this.musicBottomSty.transform = `translateY(-0px)`
         }
         this.playPlan = parseInt(perNumber)
         // console.log('当前', parseInt(perNumber))
       }, 1000)
+      // console.log('播放时间', musicMp3.currentTime);
+      // console.log('总时间', musicMp3.duration);
+      // console.log((this.playPlan/100).toFixed(5) * musicMp3.duration, '当前播放数');
     },
   }
 }
@@ -305,6 +388,23 @@ export default {
       height: 100%;
       line-height: 57px;
       // background: red;
+      .musicBottom-right_center_icon {
+        position: relative;
+        .musicBottom-right_center_word {
+          width: 300px;
+          height: 300px;
+          background: #000;
+          position: absolute;
+          bottom: 40px;
+          left: -145px;
+          // overflow: hidden;
+          .musicBottom-right_center_word_lyric {
+            width: 300px;
+            height: 300px;
+            overflow: hidden;
+          }
+        }
+      }
       .volumeClass {
         display: inline-block;
         position: relative;

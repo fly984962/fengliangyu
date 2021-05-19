@@ -10,6 +10,7 @@ const base = {
   musicHot: '/playlist/hot', // 热门歌单
   musicCat: '/top/playlist?limit=5&order=hot&cat=', // 获取热门歌单
   musicDetail: '/playlist/detail?limit=10&id=', // 获取歌单详情
+  musicDetailB: '/playlist/detail?limit=100&id=', // 获取歌单详情
   musicNewPlate: '/album/new?limit=9&area=', // 新碟上架
   musicToplist: `/toplist`, // 排行榜
   musicMv: '/mv/first?limit=10&area=', // Mv列表
@@ -26,7 +27,9 @@ const base = {
   musicAlbumComment: '/comment/album?limit=10&id=', // 专辑评论
   musicArtistA: '/artist/detail?id=', // 歌手详情
   musicArtistB: '/artist/desc?id=', // 歌手描述
-  musicArtistC: '/artist/album?limit=10&id=' // 歌手专辑
+  musicArtistC: '/artists?id=', // 歌手单曲
+  musicArtistD: '/artist/album?limit=12&id=', // 歌手专辑
+  musicArtistE: '/artist/mv?limit=12&id=' // 歌手MV
 }
 
 export default base
