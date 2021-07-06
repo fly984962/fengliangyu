@@ -132,7 +132,7 @@ export default {
       margin: auto;
       // margin: 0 auto;
       width: 70%;
-      height: 100%;
+      height: 600px;
     }
     // video {
     //   // position: absolute;

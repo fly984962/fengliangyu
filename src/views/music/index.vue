@@ -39,13 +39,49 @@ export default {
   },
   watch:{
     $route(to,from){
-      if (to.path == '/mvplay') { // 监听路由的去向 如果是去单个mv的播放页 就把音乐的播放栏隐藏掉
+      if (to.name == 'mvplay') { // 监听路由的去向 如果是去单个mv的播放页 就把音乐的播放栏隐藏掉
         this.$store.state.playbasket = false
       } else {
         this.$store.state.playbasket = true
       }
     }
   },
+  // created() {
+  //   if (sessionStorage.getItem("a")) {
+  //     // this.$store.state = JSON.parse(sessionStorage.getItem("a"))
+  //     let sessionStorageA = JSON.parse(sessionStorage.getItem("a"))
+  //     this.$store.state.statusData = sessionStorageA.statusData
+  //     console.log(sessionStorageA.statusData);
+  //   }
+  // },
+  mounted() {
+    console.log('主页');
+    window.addEventListener('beforeunload', e => this.beforeunloadHandler(e))
+    if (sessionStorage.getItem("a")) {
+      // this.$store.state = JSON.parse(sessionStorage.getItem("a"))
+      let sessionStorageA = JSON.parse(sessionStorage.getItem("a"))
+      this.$store.state.statusData = sessionStorageA.statusData
+      console.log(sessionStorageA.statusData);
+    }
+  },
+  methods: {
+    beforeunloadHandler (e) {
+      e = e || window.event
+      if (e) {
+        e.returnValue = '关闭提示'
+      }
+      window.sessionStorage.setItem('a',JSON.stringify(this.$store.state))
+      return '关闭提示'
+    }
+  },
+  destroyed () {
+   window.removeEventListener('beforeunload', e => this.beforeunloadHandler(e))
+  }
+  // playbasket(newPlay,formerPlay) {
+  //   if () {
+  //     sessionStorage.setItem()
+  //   }
+  // }
 }
 </script>
 <style scoped>
